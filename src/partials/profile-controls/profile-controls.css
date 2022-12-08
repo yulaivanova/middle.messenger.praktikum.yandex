@@ -1,0 +1,33 @@
+.profile-controls {
+  list-style: none;
+  margin: 50px 0 0;
+  padding: 0;
+  width: 100%;
+
+  &__item {
+    border-bottom: 1px solid #EAEAEA;
+
+    &--red {
+      .button {
+        color: #FF0000;
+      }
+    }
+
+
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .button {
+      width: auto;
+      height: auto;
+      padding: 10px 0;
+    }
+  }
+
+  &__save-btn {
+    display: block;
+    margin: 0 auto;
+  }
+}

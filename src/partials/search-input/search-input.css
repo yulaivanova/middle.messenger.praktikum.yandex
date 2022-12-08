@@ -1,0 +1,46 @@
+.search-input {
+    position: relative;
+    width: 100%;
+
+    label {
+        position: absolute;
+        width: 100%;
+        top: 7px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 12px;
+
+
+        color: #999999;
+
+        pointer-events: none;
+
+        transition: opacity 0.3s ease;
+    }
+
+    input {
+        position: relative;
+        width: 100%;
+        background: #EFEFEF;
+        border-radius: 5px;
+        border: 1px solid #EFEFEF;
+        padding: 10px;
+        outline: none;
+        z-index: 0;
+
+        transition: border-color 0.3s ease;
+
+        &:hover,
+        &:focus {
+            border: 1px solid #a2a4a6;
+        }
+
+
+        &:focus ~ label {
+            opacity: 0;
+        }
+    }
+}

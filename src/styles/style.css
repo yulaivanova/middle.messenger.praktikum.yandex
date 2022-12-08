@@ -1,0 +1,16 @@
+@import "fonts.css";
+@import "reboot.css";
+@import "../partials/login/login.css";
+@import "../partials/custom-input/custom-input.css";
+@import "../partials/button/button.css";
+@import "../partials/chat-block/chat-block.css";
+@import "../partials/chat/chat.css";
+@import "../partials/chat-list/chat-list.css";
+@import "../partials/chat-item/chat-item.css";
+@import "../partials/search-input/search-input.css";
+@import "../partials/profile/profile.css";
+@import "../partials/profile-list/profile-list.css";
+@import "../partials/profile-controls/profile-controls";
+@import "../partials/modal/modal";
+@import "../partials/input-file/input-file";
+@import "../partials/error/error";
