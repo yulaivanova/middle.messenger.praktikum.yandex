@@ -5,12 +5,9 @@ title: Chat
 {{!< base}}
 
 <main>
-    <main>
-        <section class="chat-block">
-            {{> 'chat-list/chat-list'}}
-            {{> 'chat/chat'}}
-        </section>
-    </main>
+    <section class="chat-block">
+        {{> 'chat-list/chat-list'}}
+        {{> 'chat/chat'}}
+    </section>
     {{> 'modal/modal' login=true title="Добавить пользователя"}}
-
 </main>

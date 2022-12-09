@@ -1,0 +1,35 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 280px;
+    height: 37px;
+    left: 500px;
+    top: 575px;
+
+    background: $color-royal-blue;
+    border: none;
+    border-radius: 8px;
+
+    padding: 0;
+
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 13px;
+    color: $color-default-white;
+
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+
+    &:hover,
+    &:focus {
+        opacity: 0.7;
+     }
+
+    &--no-border {
+        background: transparent;
+        color: $color-royal-blue;
+        font-size: 11px;
+        line-height: 11px;
+    }
+}

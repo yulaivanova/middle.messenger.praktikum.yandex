@@ -1,0 +1,45 @@
+.input-file {
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    label {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+        /* or 133% */
+
+        text-align: center;
+        text-decoration-line: underline;
+
+        color: $color-royal-blue;
+        cursor: pointer;
+
+        transition: opacity 0.3s ease;
+
+        &:hover,
+        &:focus {
+            opacity: 0.7;
+        }
+    }
+
+    &__label-text {
+        display: inline-block;
+        max-width: 122px;
+        text-decoration-line: underline;
+    }
+    &__error {
+        position: absolute;
+        font-weight: 500;
+        font-size: 11px;
+        line-height: 11px;
+
+        text-align: center;
+
+        color: $color-red-orange;
+        top: calc(100% + 4px);
+
+        opacity: 0;
+        visibility: hidden;
+    }
+}
