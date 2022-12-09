@@ -1,0 +1,48 @@
+<div class="chat-list">
+    <div class="chat-list__header">
+        <a href="#" class="chat-list__profile">
+            Профиль
+            <svg width="6" height="10" viewBox="0 0 6 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 9L5 5L1 1" stroke="$color-nobel"/>
+            </svg>
+        </a>
+        {{> 'search-input/search-input'}}
+    </div>
+    <div class="chat-list__content">
+        <ul class="chat-list__list">
+            <li class="chat-list__item">
+                {{> 'chat-item/chat-item' text="Круто" user=true}}
+            </li>
+            <li class="chat-list__item">
+                {{> 'chat-item/chat-item' text="Изображение"}}
+            </li>
+            <li class="chat-list__item">
+                {{> 'chat-item/chat-item' text="Друзья, у меня для вас особенный выпуск новостей! Друзья, у меня для вас особенный выпуск новостей!" badge="4"}}
+            </li>
+            <li class="chat-list__item">
+                {{> 'chat-item/chat-item' text="Изображение"}}
+            </li>
+            <li class="chat-list__item">
+                {{> 'chat-item/chat-item' text="Круто" user=true}}
+            </li>
+            <li class="chat-list__item">
+                {{> 'chat-item/chat-item' text="Круто" user=true badge="4"}}
+            </li>
+            <li class="chat-list__item">
+                {{> 'chat-item/chat-item' text="Друзья, у меня для вас особенный выпуск новостей! Друзья, у меня для вас особенный выпуск новостей!"  badge="45"}}
+            </li>
+            <li class="chat-list__item">
+                {{> 'chat-item/chat-item' text="Изображение"}}
+            </li>
+            <li class="chat-list__item">
+                {{> 'chat-item/chat-item' text="Круто" user=true}}
+            </li>
+            <li class="chat-list__item">
+                {{> 'chat-item/chat-item' text="Круто" user=true}}
+            </li>
+            <li class="chat-list__item">
+                {{> 'chat-item/chat-item' text="Круто" user=true}}
+            </li>
+        </ul>
+    </div>
+</div>
