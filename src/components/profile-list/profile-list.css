@@ -1,6 +1,4 @@
 .profile-list {
-
-
   &__img {
     position: relative;
     width: 130px;
@@ -32,8 +30,6 @@
       font-size: 13px;
       line-height: 14px;
 
-      text-align: center;
-
       color: $color-default-white;
 
       max-width: 64px;
@@ -42,7 +38,7 @@
       transition: opacity 0.3s ease;
     }
 
-    &:after {
+    &::after {
       content: "";
       position: absolute;
       width: 100%;
@@ -55,8 +51,7 @@
 
     &:hover,
     &:focus {
-
-      &:after {
+      &::after {
         background-color: rgba(0, 0, 0, 0.5);
       }
 
@@ -69,7 +64,6 @@
   }
 
   &__title {
-    text-align: center;
     font-weight: 600;
     font-size: 16px;
     line-height: 16px;
@@ -119,7 +113,6 @@
     text-align: right;
 
     color: $color-nobel;
-    margin: 0;
 
     border: 0;
     background-color: transparent;

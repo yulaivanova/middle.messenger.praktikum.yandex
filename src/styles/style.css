@@ -1,6 +1,6 @@
 @import "fonts.css";
-@import "reboot.css";
 @import "variables.css";
+@import "reboot.css";
 @import "../components/login/login.css";
 @import "../components/custom-input/custom-input.css";
 @import "../components/button/button.css";
