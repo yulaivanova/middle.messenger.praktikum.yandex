@@ -1,0 +1,20 @@
+<section class="login">
+    <div class="login__form">
+        <form action="#">
+            <h1 class="login__title">Регистрация</h1>
+            <div class="login__inputs">
+                {{> 'custom-input/custom-input' type="email" placeholder="Почта" inputName="email" id="email" errorMessage="Поле обязательно для заполнения"}}
+                {{> 'custom-input/custom-input' type="text" placeholder="Логин" inputName="login" id="login" errorMessage="Поле обязательно для заполнения"}}
+                {{> 'custom-input/custom-input' type="text" placeholder="Имя" inputName="first_name" id="first_name" errorMessage="Поле обязательно для заполнения"}}
+                {{> 'custom-input/custom-input' type="text" placeholder="Фамилия" inputName="second_name" id="second_name" errorMessage="Поле обязательно для заполнения"}}
+                {{> 'custom-input/custom-input' type="tel" placeholder="Телефон" inputName="phone" id="phone" errorMessage="Поле обязательно для заполнения"}}
+                {{> 'custom-input/custom-input' type="password" placeholder="Пароль" inputName="password" id="password" errorMessage="Поле обязательно для заполнения"}}
+                {{> 'custom-input/custom-input' type="password" placeholder="Пароль (ещё раз)" inputName="password_repeat" id="password_repeat" errorMessage="Пароли не совпадают"}}
+            </div>
+            <div class="login__buttons">
+                {{> 'button/button' buttonText="Зарегестрироваться"}}
+                {{> 'button/button' buttonText="Войти" mod="no-border"}}
+            </div>
+        </form>
+    </div>
+</section>

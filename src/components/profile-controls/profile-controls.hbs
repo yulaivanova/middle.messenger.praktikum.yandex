@@ -1,0 +1,16 @@
+<ul class="profile-controls">
+    {{#if saveBtn}}
+        {{> 'button/button' buttonText="Сохранить" class="profile-controls__save-btn"}}
+    {{/if}}
+    {{#if profileControls}}
+    <li class="profile-controls__item">
+        {{> 'button/button' buttonText="Изменить данные" mod="no-border"}}
+    </li>
+    <li class="profile-controls__item">
+        {{> 'button/button' buttonText="Изменить пароль" mod="no-border"}}
+    </li>
+    <li class="profile-controls__item profile-controls__item--red">
+        {{> 'button/button' buttonText="Выйти" mod="no-border"}}
+    </li>
+    {{/if}}
+</ul>

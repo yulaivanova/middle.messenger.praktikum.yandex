@@ -1,0 +1,17 @@
+@import "fonts.css";
+@import "reboot.css";
+@import "variables.css";
+@import "../components/login/login.css";
+@import "../components/custom-input/custom-input.css";
+@import "../components/button/button.css";
+@import "../components/chat-block/chat-block.css";
+@import "../components/chat/chat.css";
+@import "../components/chat-list/chat-list.css";
+@import "../components/chat-item/chat-item.css";
+@import "../components/search-input/search-input.css";
+@import "../components/profile/profile.css";
+@import "../components/profile-list/profile-list.css";
+@import "../components/profile-controls/profile-controls";
+@import "../components/modal/modal";
+@import "../components/input-file/input-file";
+@import "../components/error/error";
