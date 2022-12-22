@@ -17,7 +17,7 @@ export default class EventBus<E extends string = string, M extends { [K in E]: u
     }
 
     this.listeners[event] = this.listeners[event]!.filter(
-      listener => listener !== callback,
+        (listener) => listener !== callback
     );
   }
 

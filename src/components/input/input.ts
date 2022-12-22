@@ -24,6 +24,6 @@ export class Input extends Block {
     // language=hbs
     return `
         <input type="{{type}}" name="{{inputName}}" placeholder="{{placeholder}}" id="{{id}}" value="{{value}}" required">
-    `
+    `;
   }
 }

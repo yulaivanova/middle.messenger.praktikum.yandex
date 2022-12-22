@@ -66,7 +66,6 @@ export class ProfileList extends Block {
   }
 
   getImageUrl() {
-    // @ts-ignore
     const url = new URL('../../assets/img/profile.png', import.meta.url).href;
 
     this.setProps({imageURL: url});
@@ -209,6 +208,6 @@ export class ProfileList extends Block {
                 {{/if}}
             </ul>
         </div>
-    `
+    `;
   }
 }

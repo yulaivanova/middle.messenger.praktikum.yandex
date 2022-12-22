@@ -9,7 +9,7 @@ interface BlockMeta<P = any> {
 // eslint-disable-next-line no-undef
 type Events = Values<typeof Block.EVENTS>;
 
-export default class Block<P extends  object={}> {
+export default class Block<P extends object={}> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -124,7 +124,7 @@ export default class Block<P extends  object={}> {
 
   protected render(): string {
     return '';
-  };
+  }
 
   getContent(): HTMLElement {
     // Хак, чтобы вызвать CDM только после добавления в DOM
@@ -199,7 +199,7 @@ export default class Block<P extends  object={}> {
      * Рендерим шаблон
      */
     const template = Handlebars.compile(this.render());
-    fragment.innerHTML = template({ ...this.state, ...this.props, children: this.children, refs: this.refs });
+    fragment.innerHTML = template({...this.state, ...this.props, children: this.children, refs: this.refs});
 
     /**
      * Заменяем заглушки на компоненты
