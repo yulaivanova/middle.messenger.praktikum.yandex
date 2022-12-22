@@ -1,5 +1,5 @@
 import Block from 'core/Block';
-import {validateForm, ValidateRuleType} from "../../helpers/validateForm";
+import {validateForm, ValidateRuleType} from '../../helpers/validateForm';
 
 interface ModalProps {
   modalTitle: string;
@@ -87,6 +87,6 @@ export class Modal extends Block {
                 </div>
             </div>
         </div>
-    `
+    `;
   }
 }

@@ -24,7 +24,6 @@ export class Profile extends Block {
   }
 
   render() {
-    console.log(this.props, 'profile')
     // language=hbs
     return `
         <section class="profile">

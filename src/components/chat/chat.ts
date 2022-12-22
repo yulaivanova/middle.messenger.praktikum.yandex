@@ -1,8 +1,6 @@
 import Block from 'core/Block';
 
-// @ts-ignore
 const testImg = new URL('../../assets/img/test-image.png', import.meta.url).href;
-// @ts-ignore
 const profileImg = new URL('../../assets/img/user-icon.png', import.meta.url).href;
 
 interface ChatProps {

@@ -1,6 +1,5 @@
 import Block from 'core/Block';
 
-// @ts-ignore
 const url = new URL('../../assets/img/user-icon.png', import.meta.url).href;
 
 export class ChatList extends Block {
@@ -96,7 +95,7 @@ export class ChatList extends Block {
                   </li>
                   <li class="chat-list__item">
                       {{{ChatItem imgPath="${url}"
-                                  text="В 2008 году художник Jon Rafman  начал собирать. В 2008 году художник Jon Rafman  начал собирать."
+                                  text="В 2008 году художник Jon Rafman начал собирать. В 2008 году художник Jon Rafman начал собирать."
                                   user=false
                                   time="10:49"
                                   name="Андрей"

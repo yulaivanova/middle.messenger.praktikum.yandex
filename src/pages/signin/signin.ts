@@ -34,12 +34,12 @@ export class SigninPage extends Block {
           this.refs.surnameInputRef.refs.errorRef.setProps({text: error});
         }
       },
-      emailHandler:( e: Event) => {
+      emailHandler: (e: Event) => {
         const inputEl = e.target as HTMLInputElement;
         const error = validateForm([{type: ValidateRuleType.Email, value: inputEl.value}]);
         this.refs.emailRef.refs.errorRef.setProps({text: error});
       },
-      phoneHandler:( e: Event) => {
+      phoneHandler: (e: Event) => {
         const inputEl = e.target as HTMLInputElement;
         const error = validateForm([{type: ValidateRuleType.Phone, value: inputEl.value}]);
         this.refs.phoneInputRef.refs.errorRef.setProps({text: error});
@@ -53,7 +53,7 @@ export class SigninPage extends Block {
         const inputEl = e.target as HTMLInputElement;
         this.checkPassword(inputEl);
       },
-      onSubmit: (e: Event) => this.onSubmit(e)
+      onSubmit: (e: Event) => this.onSubmit(e),
     });
   }
 
@@ -94,7 +94,7 @@ export class SigninPage extends Block {
       if (input.name === 'password_repeat') {
         this.checkPassword(input);
       }
-    })
+    });
   }
   render() {
     // language=hbs

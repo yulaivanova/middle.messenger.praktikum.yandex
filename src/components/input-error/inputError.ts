@@ -12,6 +12,6 @@ export class InputError extends Block<ErrorProps> {
     // language=hbs
     return `
         <span class="input-error">{{text}}</span>
-    `
+    `;
   }
 }

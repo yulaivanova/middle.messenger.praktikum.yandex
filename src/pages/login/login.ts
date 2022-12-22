@@ -46,7 +46,7 @@ export class LoginPage extends Block {
       if (input.name === 'password') {
         this.refs.passwordInputRef.refs.errorRef.setProps({text: error});
       }
-    })
+    });
   }
   render() {
     // language=hbs

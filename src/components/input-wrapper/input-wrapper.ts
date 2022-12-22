@@ -18,7 +18,7 @@ export class InputWrapper extends Block {
   static componentName = 'InputWrapper';
   constructor({...props}: InputWrapperProps) {
     super({
-      ...props
+      ...props,
     });
   }
 
@@ -37,6 +37,6 @@ export class InputWrapper extends Block {
             <label for="{{id}}" class="input-wrapper__label">{{placeholder}}</label>
             {{{InputError ref="errorRef" text=error}}}
         </div>
-    `
+    `;
   }
 }

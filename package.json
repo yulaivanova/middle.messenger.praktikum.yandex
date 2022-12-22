@@ -5,7 +5,7 @@
   "scripts": {
     "start": "parcel src/pages/index.hbs --no-cache --port 3000",
     "build": "parcel build src/pages/index.hbs",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/.bin/eslint ."
   },
   "alias": {
     "core": "./src/core",
