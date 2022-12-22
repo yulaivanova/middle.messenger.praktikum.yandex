@@ -1,6 +1,4 @@
 .profile-list {
-
-
   &__img {
     position: relative;
     width: 130px;
@@ -32,8 +30,6 @@
       font-size: 13px;
       line-height: 14px;
 
-      text-align: center;
-
       color: $color-default-white;
 
       max-width: 64px;
@@ -42,7 +38,7 @@
       transition: opacity 0.3s ease;
     }
 
-    &:after {
+    &::after {
       content: "";
       position: absolute;
       width: 100%;
@@ -55,8 +51,7 @@
 
     &:hover,
     &:focus {
-
-      &:after {
+      &::after {
         background-color: rgba(0, 0, 0, 0.5);
       }
 
@@ -69,7 +64,6 @@
   }
 
   &__title {
-    text-align: center;
     font-weight: 600;
     font-size: 16px;
     line-height: 16px;
@@ -88,15 +82,43 @@
   }
 
   &__item {
+    position: relative;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
 
     border-bottom: 1px solid $color-whisper;
 
-    padding: 10px 0;
+    padding: 10px 0 5px;
 
     &:last-child {
       border-bottom: none;
+    }
+
+    input {
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 13px;
+
+      text-align: right;
+
+      color: $color-nobel;
+
+      border: 0;
+      background-color: transparent;
+      padding: 0;
+      margin: 0;
+      width: 50%;
+
+      outline: none;
+    }
+
+    .input-error {
+      width: 100%;
+      position: relative;
+      text-align: right;
+      display: block;
+      padding-top: 5px;
     }
   }
 
@@ -109,24 +131,5 @@
 
 
     color: $color-nero;
-  }
-
-  &__value {
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 13px;
-
-    text-align: right;
-
-    color: $color-nobel;
-    margin: 0;
-
-    border: 0;
-    background-color: transparent;
-    padding: 0;
-    margin: 0;
-    width: 50%;
-
-    outline: none;
   }
 }

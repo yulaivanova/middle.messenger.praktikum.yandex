@@ -1,0 +1,6 @@
+{
+  "extends": "./stylelintconfig.js",
+  "ignoreFiles": [
+    "dist/*"
+  ]
+}
