@@ -76,7 +76,7 @@ textarea {
 input:-webkit-autofill {
   box-shadow: inset 0 0 0 1000px $color-default-white;
 
-  -webkit-text-fill-color: $color-default-white;
+  -webkit-text-fill-color: $color-default-black;
 }
 
 input,

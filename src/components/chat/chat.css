@@ -16,7 +16,7 @@
   }
 
   &__footer {
-    height: 55px;
+    height: 65px;
 
     border-top: 1px solid $color-whisper;
 
@@ -204,6 +204,7 @@
 
   &__message {
     width: 100%;
+    position: relative;
 
     input {
       width: 100%;
@@ -226,12 +227,16 @@
         border: 1px solid $color-grey-chateau;
       }
     }
+    .input-error {
+      top: calc(100% + 2px);
+      left: 20px;
+    }
   }
 
   &__send-btn {
     width: 28px;
     height: 28px;
-    background: $color-royal-blue;
+    background-color: $color-royal-blue;
     border-radius: 50%;
 
     display: flex;
@@ -243,6 +248,10 @@
 
     cursor: pointer;
 
+    background-image: url('../assets/img/arrow.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+
     transition: opacity 0.3s ease;
 
     &:hover,
@@ -250,4 +259,13 @@
       opacity: 0.7;
     }
   }
+}
+
+.chat-block {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+
+  max-width: 1920px;
+  margin: 0 auto;
 }

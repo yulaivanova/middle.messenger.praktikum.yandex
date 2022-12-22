@@ -82,15 +82,43 @@
   }
 
   &__item {
+    position: relative;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
 
     border-bottom: 1px solid $color-whisper;
 
-    padding: 10px 0;
+    padding: 10px 0 5px;
 
     &:last-child {
       border-bottom: none;
+    }
+
+    input {
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 13px;
+
+      text-align: right;
+
+      color: $color-nobel;
+
+      border: 0;
+      background-color: transparent;
+      padding: 0;
+      margin: 0;
+      width: 50%;
+
+      outline: none;
+    }
+
+    .input-error {
+      width: 100%;
+      position: relative;
+      text-align: right;
+      display: block;
+      padding-top: 5px;
     }
   }
 
@@ -103,23 +131,5 @@
 
 
     color: $color-nero;
-  }
-
-  &__value {
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 13px;
-
-    text-align: right;
-
-    color: $color-nobel;
-
-    border: 0;
-    background-color: transparent;
-    padding: 0;
-    margin: 0;
-    width: 50%;
-
-    outline: none;
   }
 }
