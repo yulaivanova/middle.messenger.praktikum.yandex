@@ -10,7 +10,7 @@ interface RequestOptions {
   headers?: {[key: string]:string};
   timeout?: number;
   method?:string;
-  data?:string;
+  data?:{[key: string]:string};
 }
 
 function queryStringify(data: any = {}) {
@@ -53,13 +53,15 @@ export class HTTPTransport {
       }
 
       const xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
       const isGet = method === METHODS.GET;
 
       xhr.open(
           method,
           isGet && !!data
             ? `${url}${queryStringify(data)}`
-            : url
+            : url,
+          true
       );
 
       Object.keys(headers).forEach((key) => {
@@ -67,7 +69,13 @@ export class HTTPTransport {
       });
 
       xhr.onload = function () {
-        resolve(xhr);
+        if (xhr.getResponseHeader("Content-Type").includes('image')) {
+          resolve(xhr.responseURL);
+        } else {
+          const isJson = xhr.response !== 'OK';
+          const response = isJson ? JSON.parse(xhr.response) : null;
+          resolve(response);
+        }
       };
 
       xhr.onabort = reject;

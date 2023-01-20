@@ -42,6 +42,12 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    &~.input-error {
+      font-size: 14px;
+      position: static;
+      text-align: center;
+    }
   }
 
   &__inputs {

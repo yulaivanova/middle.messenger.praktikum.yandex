@@ -1,18 +1,49 @@
 import Block from 'core/Block';
+import {withStore, withMessages} from '../../utils';
+import {Store} from '../../core';
+import {addUser} from '../../services/chat';
+import MessagesController from 'services/messages';
+import {Message} from 'api/types';
 
 const testImg = new URL('../../assets/img/test-image.png', import.meta.url).href;
 const profileImg = new URL('../../assets/img/user-icon.png', import.meta.url).href;
 
 interface ChatProps {
+  store: Store<AppState>;
   imgPath: string;
   name: string;
+  activeMessages: Message[] | null | Message;
   error?:string;
+  onLoginAdd?: () => void;
+  isModal?:()=> boolean;
+  modalTitle?: string;
+  onRemoveUserBtnClick?: () => void;
+  isLoginModal?: () => boolean;
+  userId?: number;
 }
-export class Chat extends Block {
+class Chat extends Block<ChatProps> {
   static componentName = 'Chat';
+
   constructor({...props}: ChatProps) {
-    super({
-      ...props,
+    super({...props});
+
+    this.setProps({
+      isLoginModal: () => this.props.store.getState().isLoginModal,
+      onAddUserBtnClick: () => {
+        this.props.store.dispatch({isLoginModal: true});
+      },
+      onRemoveUserBtnClick: () => {
+        this.props.store.dispatch({isLoginModal: true});
+      },
+      onModalCloseClick: () => {
+        this.closeModal();
+      },
+      onModalOverlayClick: (e: Event) => {
+        const target = e.target as HTMLElement;
+        if (target.closest('.modal__overlay')) {
+          this.closeModal();
+        }
+      },
       messageHandler: (e: FocusEvent) => {
         const inputEl = e.target as HTMLInputElement;
         const error = inputEl.value.length === 0 ? 'Сообщение не должно быть пустым' : '';
@@ -29,12 +60,45 @@ export class Chat extends Block {
         const input = form.querySelector('input') as HTMLInputElement;
         const error = input.value.length === 0 ? 'Сообщение не должно быть пустым' : '';
         this.refs.errorRef.setProps({text: error});
-        const formData = new FormData(form);
-        // eslint-disable-next-line no-console
-        console.log(formData, ...formData);
+        if (!error) {
+          const chatId = this.props.store.getState().activeChat;
+          MessagesController.sendMessage(chatId, input.value);
+        }
+      },
+      onChatControlsClick: () => {
+        if (this.props.store.getState().activeChat) {
+          const controlsBlock = document.querySelector('.chat__controls-block') as HTMLElement;
+          controlsBlock.classList.toggle('is-active');
+        }
+      },
+      onLoginAdd: () => {
+        this.addUser();
       },
     });
+
+    this.getUserId();
   }
+
+  getUserId() {
+    this.setProps({userId: this.props.store.getState().user?.id});
+  }
+
+  addUser() {
+    const loginInput = document.querySelector('input[name="login"]') as HTMLInputElement;
+    if (loginInput.value) {
+      const loginData = {
+        users: [Number(loginInput.value)],
+        chatId: this.props.store.getState().activeChat,
+      };
+
+      this.props.store.dispatch(addUser, JSON.stringify(loginData));
+    }
+  }
+
+  closeModal() {
+    this.props.store.dispatch({isLoginModal: false});
+  }
+
   protected render(): string {
     // language=hbs
     return `
@@ -44,35 +108,30 @@ export class Chat extends Block {
                     <img src="${profileImg}" alt="user-photo">
                 </div>
                 <p class="chat__title">{{name}}</p>
-                <button type="button" class="chat__controls">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
+                {{{Button
+                        chatControls=true
+                        onClick=onChatControlsClick
+                }}}
+                <div class="chat__controls-block">
+                    {{{Button
+                            type="button"
+                            text="Добавить пользователя"
+                            className="chat__control"
+                            onClick=onAddUserBtnClick
+                    }}}
+                    {{{Button
+                            type="button"
+                            text="Удалить пользователя"
+                            className="chat__control"
+                            onClick=onRemoveUserBtnClick
+                    }}}
+                </div>
             </div>
             <div class="chat__content">
                 <div class="chat__scrollable-content">
-                    <div class="chat__date">19 июля</div>
-                    <div class="chat__bubble">
-                        Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.<span class="chat__time">
-                        <span class="chat__time-inner">11:56</span>
-                    </span>
-                    </div>
-                    <div class="chat__bubble chat__bubble--image">
-                        <img src="${testImg}" alt="test">
-                        <span class="chat__time">
-                    <span class="chat__time-inner">11:56</span>
-                </span>
-                    </div>
-                    <div class="chat__bubble chat__bubble--sended">Круто!
-                        <span class="chat__time">
-                        <svg width="11" height="5" viewBox="0 0 11 5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <line y1="-0.5" x2="3.765" y2="-0.5" transform="matrix(0.705933 0.708278 -0.705933 0.708278 0.700195 2.33313)" stroke="$color-royal-blue"/>
-                            <line y1="-0.5" x2="5.6475" y2="-0.5" transform="matrix(0.705933 -0.708278 0.705933 0.708278 3.35828 5.00006)" stroke="$color-royal-blue"/>
-                            <line y1="-0.5" x2="5.6475" y2="-0.5" transform="matrix(0.705933 -0.708278 0.705933 0.708278 6.01587 5.00006)" stroke="$color-royal-blue"/>
-                        </svg>11:55
-                        </span>
-                    </div>
+                    {{#each activeMessages}}
+                        {{{ChatBubble message=this userId=../userId}}}
+                    {{/each}}
                 </div>
             </div>
             <form class="chat__footer" action="#">
@@ -91,12 +150,26 @@ export class Chat extends Block {
                 </div>
                 {{{Button
                         text=''
-                        type="submit"
+                        type="button"
                         className="chat__send-btn"
                         onClick=onSubmit
                 }}}
             </form>
+            {{#if isLoginModal}}
+                {{{Modal
+                        modalFile=false
+                        modalLogin=true
+                        modalTitle='Добавить пользователя'
+                        onModalCloseClick=onModalCloseClick
+                        onModalOverlayClick=onModalOverlayClick
+                        onLoginAdd=onLoginAdd
+                }}}
+            {{/if}}
         </div>
     `;
   }
 }
+const ComposedChat = withStore(withMessages(Chat));
+
+export {ComposedChat as Chat};
+

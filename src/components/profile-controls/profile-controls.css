@@ -29,4 +29,9 @@
     display: block;
     margin: 0 auto;
   }
+
+  &__back {
+    display: block;
+    margin: 15px auto 0;
+  }
 }

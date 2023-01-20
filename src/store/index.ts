@@ -1,0 +1,17 @@
+export const defaultState: AppState = {
+  appIsInited: false,
+  isLoading: false,
+  screen: null,
+  loginFormError: null,
+  fileFormError: null,
+  user: null,
+  isSettings: false,
+  isModal: false,
+  avatarPath: null,
+  chats: null,
+  activeChat: null,
+  isLoginModal: false,
+  isDelLoginModal: false,
+  messages: null,
+  activeMessages: null,
+};

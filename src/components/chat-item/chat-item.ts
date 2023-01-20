@@ -1,25 +1,46 @@
 import Block from 'core/Block';
+import {withChats, withRouter, withStore} from '../../utils';
+import {Store} from '../../core';
+import {Message} from '../../api/types';
 
 interface ChatItemProps {
+  store: Store<AppState>;
   text?: string;
   time?: string;
   imgPath?: string;
   badge?: string;
   name?: string;
   user?: boolean;
+  id?: string;
+  onClick?: () => void;
 }
 
-export class ChatItem extends Block {
+class ChatItem extends Block<ChatItemProps> {
 
   static componentName = 'ChatItem';
   constructor({...props}: ChatItemProps) {
-    super({...props});
+    super({
+      ...props,
+      events: {
+        click: () => this.onClick(),
+      },
+    });
   }
+
+  onClick() {
+    this.props.store.dispatch({activeChat: this.props.id});
+    const allMessages = this.props.store.getState().messages;
+    if (allMessages?.length) {
+      const activeMessages: Message[] | null | Message = allMessages.filter((item) => item.chat_id === this.props.id);
+      this.props.store.dispatch({activeMessages: activeMessages});
+    }
+  }
+
 
   protected render(): string {
     // language=hbs
     return `
-        <div class="chat-item">
+        <div class="chat-item" id={{id}}>
             <div class="chat-item__img">
                 <img src="{{imgPath}}" alt="user-photo">
             </div>
@@ -29,10 +50,12 @@ export class ChatItem extends Block {
                     <p class="chat-item__message-time">{{time}}</p>
                 </div>
                 <p class="chat-item__subtitle">
-                    {{#if user}}
-                        <span>Вы</span>
+                {{#if text}}
+                    {{#if text.user}}
+                        <span>{{text.user.first_name}}:</span>
                     {{/if}}
-                    {{text}}
+                    {{text.content}}
+                {{/if}}
                 </p>
                 {{#if badge}}
                     <div class="chat-item__badge">{{badge}}</div>
@@ -44,3 +67,7 @@ export class ChatItem extends Block {
     `;
   }
 }
+
+const ComposedChatItem = withStore(ChatItem);
+
+export {ComposedChatItem as ChatItem};

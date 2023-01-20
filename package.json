@@ -3,15 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "parcel src/pages/index.hbs --no-cache --port 3000 --open",
-    "build": "parcel build src/pages/index.hbs && node ./server.js",
+    "start": "parcel src/index.html --no-cache --port 3000 --open",
+    "build": "parcel build src/index.html && node ./server.js",
     "test": "node_modules/.bin/eslint ."
   },
   "alias": {
     "core": "./src/core",
     "components": "./src/components",
     "helpers": "./src/helpers",
-    "pages": "./src/pages"
+    "pages": "./src/pages",
+    "utils": "./src/utils",
+    "api": "./src/api",
+    "services": "./src/services"
   },
   "keywords": [],
   "author": "",
