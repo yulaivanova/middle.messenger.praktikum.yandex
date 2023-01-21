@@ -9,8 +9,8 @@ type ChatTitle = {
 }
 
 type NewUserData = {
-  users: number[],
-  chatId: number
+  users: string[],
+  chatId: string
 }
 
 
@@ -44,12 +44,12 @@ export const getChat = async (
     return;
   }
 
-  dispatch({chats: response as Chats[]});
-
   response.map(async(chat) => {
     const tokenResponse = await chatAPI.getToken(chat.id);
     await MessagesController.connect(chat.id, tokenResponse.token);
   });
+
+  dispatch({chats: response as Chats[]});
 };
 
 export const addUser = async (
@@ -65,6 +65,21 @@ export const addUser = async (
   }
 
   dispatch({fileFormError: null, isLoginModal: false});
+};
+
+export const deleteUser = async (
+    dispatch: Dispatch<AppState>,
+    state: AppState,
+    action: NewUserData
+) => {
+  const response = await chatAPI.deleteUser(action);
+
+  if (apiHasError(response)) {
+    dispatch({fileFormError: response.reason, isDelLoginModal: true});
+    return;
+  }
+
+  dispatch({fileFormError: null, isDelLoginModal: false});
 };
 
 

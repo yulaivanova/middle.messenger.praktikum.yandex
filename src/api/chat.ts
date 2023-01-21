@@ -28,4 +28,9 @@ export const chatAPI = {
   getToken(id: number) {
     return new HTTPTransport().post(`https://ya-praktikum.tech/api/v2/chats/token/${id}`, {headers: {'Content-Type': 'application/json'}});
   },
+
+  deleteUser(userData: NewUserData) {
+    return new HTTPTransport().delete('https://ya-praktikum.tech/api/v2/chats/users', {
+      headers: {'Content-Type': 'application/json'}, data: userData});
+  },
 };

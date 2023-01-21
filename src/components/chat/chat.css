@@ -14,6 +14,14 @@
     border-bottom: 1px solid $color-whisper;
 
     padding: 10px 0;
+
+    visibility: visible;
+    opacity: 0;
+
+    &.is-active {
+      opacity: 1;
+      visibility: visible;
+    }
   }
 
   &__footer {
@@ -69,7 +77,6 @@
   }
 
   &__controls {
-
     margin-left: auto;
     background: $color-white-smoke;
     border: none;
@@ -283,6 +290,7 @@
     visibility: hidden;
 
     position: absolute;
+    z-index: 100;
     right: 0;
     top: calc(100% + 10px);
 
@@ -318,6 +326,10 @@
     &:last-of-type {
       margin-bottom: 0;
     }
+  }
+
+  &__info {
+    text-align: center;
   }
 }
 

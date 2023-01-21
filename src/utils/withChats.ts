@@ -14,7 +14,6 @@ export function withChats<P extends WithChatProps>(WrappedBlock: BlockClass<P>) 
 
     __onChangeChatsCallback = (prevState: AppState, nextState: AppState) => {
       if (JSON.stringify(prevState.chats) !== JSON.stringify(nextState.chats)) {
-
         // @ts-expect-error this is not typed
         this.setProps({...this.props, chats: nextState.chats});
       }

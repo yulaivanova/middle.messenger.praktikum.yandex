@@ -2,6 +2,7 @@ import Block from 'core/Block';
 import {withChats, withRouter, withStore} from '../../utils';
 import {CoreRouter, Store} from '../../core';
 import {Chats} from '../../api/types';
+import {getChat} from '../../services/chat';
 
 const url = new URL('../../assets/img/user-icon.png', import.meta.url).href;
 
@@ -25,6 +26,7 @@ class ChatList extends Block<ChatListProps> {
       },
     });
   }
+
   protected render(): string {
     // language=hbs
     return `

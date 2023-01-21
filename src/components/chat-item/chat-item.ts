@@ -34,6 +34,9 @@ class ChatItem extends Block<ChatItemProps> {
       const activeMessages: Message[] | null | Message = allMessages.filter((item) => item.chat_id === this.props.id);
       this.props.store.dispatch({activeMessages: activeMessages});
     }
+
+    const chatHeader = document.querySelector('.chat__header');
+    chatHeader.classList.add('is-active');
   }
 
 

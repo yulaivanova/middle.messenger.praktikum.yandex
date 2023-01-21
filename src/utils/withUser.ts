@@ -12,7 +12,6 @@ export function withUser<P extends WithUserProps>(WrappedBlock: BlockClass<P>) {
     }
 
     __onChangeUserCallback = (prevState: AppState, nextState: AppState) => {
-      console.log('withuser');
       if (JSON.stringify(prevState.user) !== JSON.stringify(nextState.user)) {
 
         // @ts-expect-error this is not typed

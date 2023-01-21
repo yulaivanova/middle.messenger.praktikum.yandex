@@ -41,8 +41,14 @@ class MessagesController {
     socket.send({type: 'get old', content: '0'});
   }
 
-  onMessage(messages: Message | Message[]) {
+  onMessage(messages: Message | Message[], id) {
+    console.log('get');
     let messagesToAdd: Message[] = [];
+    let res = {};
+
+    if (!messages.chat_id) {
+      messages.chat_id = id;
+    }
 
     if (Array.isArray(messages)) {
       messagesToAdd = messages.reverse();
@@ -51,11 +57,24 @@ class MessagesController {
     }
 
     const currentMessages = (window.store.getState().messages) || [];
-
-    const res = [...messagesToAdd, ...currentMessages];
+    res = [...currentMessages, ...messagesToAdd];
 
     window.store.dispatch({messages: res});
     window.store.dispatch(getChat);
+
+    if (window.store.getState().activeChat) {
+      setTimeout(() => {
+        const allMessages = window.store.getState().messages;
+        if (allMessages?.length) {
+          const activeMessages: Message[] | null | Message = allMessages.filter((item) => item.chat_id === id);
+          window.store.dispatch({activeMessages: activeMessages});
+          const elements = document.querySelectorAll('.chat__bubble');
+          if (elements.length) {
+            elements[elements.length - 1].scrollIntoView({behavior: 'smooth'});
+          }
+        }
+      },1000);
+    }
   }
 
   onClose(id: number) {
@@ -67,7 +86,7 @@ class MessagesController {
   }
 
   subscribe(transport: WS, id: number) {
-    transport.on(WSEvents.Message, (message: any) => this.onMessage(message));
+    transport.on(WSEvents.Message, (message: any) => this.onMessage(message, id));
     transport.on(WSEvents.Close, () => this.onClose(id));
   }
 }

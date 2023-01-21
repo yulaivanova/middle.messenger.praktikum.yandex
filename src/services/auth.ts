@@ -2,6 +2,9 @@ import { authAPI } from 'api/auth';
 import { UserDTO } from 'api/types';
 import type { Dispatch } from 'core';
 import { transformUser, apiHasError } from 'utils';
+import {getChat} from './chat';
+import {getAvatarPath} from './profile';
+import MessagesController from './messages';
 
 type LoginPayload = {
   login: string;
@@ -64,15 +67,29 @@ export const login = async (
     return;
   }
 
-  dispatch({user: transformUser(responseUser as UserDTO)});
+  const userData = transformUser(responseUser as UserDTO);
+  dispatch({user: userData});
 
-  window.router.go('/chat');
+  if (!userData.avatar) {
+    const url = new URL('../assets/img/profile.png', import.meta.url).href;
+    dispatch({avatarPath: url});
+  } else {
+    const avatarResponse = getAvatarPath(userData.avatar);
+    dispatch({avatarPath: avatarResponse});
+  }
+
+  dispatch(getChat);
+
+  setTimeout(() => {
+    window.router.go('/chat');
+  },600);
 };
 
 export const logout = async (dispatch: Dispatch<AppState>) => {
   await authAPI.logout();
 
-  dispatch({isLoading: false, user: null, avatarPath: null});
+  dispatch({isLoading: false, user: null, avatarPath: null, activeChat: null, activeMessages: null, messages: null, chats: null});
+  MessagesController.closeAll();
 
   window.router.go('/');
 };

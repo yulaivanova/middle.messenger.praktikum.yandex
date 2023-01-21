@@ -1,4 +1,5 @@
 import Block from 'core/Block';
+import {parseDate} from 'helpers/parseDate';
 
 interface ChatBubbleProps {
   userId: () => number,
@@ -23,17 +24,21 @@ export class ChatBubble extends Block {
   }
 
   protected render(): string {
-    // const date = parsDate(this.props.messageTime).day;
-    // const { time } = parsDate(this.props.messageTime);
+    const time = parseDate(this.props.messageTime).time;
     const isMine = (this.props.messageAuthor === this.props.userId);
+    const isInfo = (this.props.type === 'user connected');
     // language=hbs
     return `
+        {{#if ${isInfo} }}
+            <p class="chat__info">{{messageText}} user connected</p>
+        {{else}}
         <div class="chat__bubble{{#if ${isMine}}} chat__bubble--sended{{/if}}">
             {{messageText}}
             <span class="chat__time">
-              <span class="chat__time-inner">11:56</span>
+              <span class="chat__time-inner">${time}</span>
             </span>
         </div>
+        {{/if}}
     `;
   }
 }

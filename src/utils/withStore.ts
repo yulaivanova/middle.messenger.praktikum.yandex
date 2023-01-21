@@ -1,5 +1,4 @@
 import { BlockClass, Store } from 'core';
-import {isEqual} from '../helpers/helpers';
 
 type WithStateProps = { store: Store<AppState> };
 
@@ -14,15 +13,17 @@ export function withStore<P extends WithStateProps>(WrappedBlock: BlockClass<P>)
       super({...props, store: window.store});
     }
 
-    __onChangeStoreCallback = () => {
+    __onChangeStoreCallback = (prevState: AppState, nextState: AppState) => {
       /**
        * TODO: проверить что стор реально обновлен
        * и прокидывать не целый стор, а необходимые поля
        * с помощью метода mapStateToProps
        */
 
-      // @ts-expect-error this is not typed
-      this.setProps({...this.props, store: window.store});
+      if (JSON.stringify(prevState) !== JSON.stringify(nextState)) {
+        // @ts-expect-error this is not typed
+        this.setProps({...this.props, store: window.store});
+      }
     }
 
     componentDidMount(props: P) {

@@ -1,7 +1,7 @@
 import Block from 'core/Block';
 import {withStore, withMessages} from '../../utils';
 import {Store} from '../../core';
-import {addUser} from '../../services/chat';
+import {addUser, deleteUser, getChat} from '../../services/chat';
 import MessagesController from 'services/messages';
 import {Message} from 'api/types';
 
@@ -19,7 +19,15 @@ interface ChatProps {
   modalTitle?: string;
   onRemoveUserBtnClick?: () => void;
   isLoginModal?: () => boolean;
+  isDelLoginModal?: () => boolean;
+  onAddUserBtnClick?: () => void;
+  onModalCloseClick?: () => void;
+  onModalOverlayClick?: (e: Event) => void;
+  onSubmit?: (e: Event) => void;
+  messageHandler?: (e: FocusEvent) => void;
+  onChatControlsClick?: () => void;
   userId?: number;
+  activeChatId?: () => string | null;
 }
 class Chat extends Block<ChatProps> {
   static componentName = 'Chat';
@@ -29,11 +37,13 @@ class Chat extends Block<ChatProps> {
 
     this.setProps({
       isLoginModal: () => this.props.store.getState().isLoginModal,
+      isDelLoginModal: () => this.props.store.getState().isDelLoginModal,
+      activeChatId: () => this.props.store.getState().activeChat,
       onAddUserBtnClick: () => {
         this.props.store.dispatch({isLoginModal: true});
       },
       onRemoveUserBtnClick: () => {
-        this.props.store.dispatch({isLoginModal: true});
+        this.props.store.dispatch({isDelLoginModal: true});
       },
       onModalCloseClick: () => {
         this.closeModal();
@@ -43,15 +53,6 @@ class Chat extends Block<ChatProps> {
         if (target.closest('.modal__overlay')) {
           this.closeModal();
         }
-      },
-      messageHandler: (e: FocusEvent) => {
-        const inputEl = e.target as HTMLInputElement;
-        const error = inputEl.value.length === 0 ? 'Сообщение не должно быть пустым' : '';
-        this.refs.errorRef.setProps({text: error});
-      },
-      onBlur: () => {
-        const error = '';
-        this.refs.errorRef.setProps({text: error});
       },
       onSubmit: (e: Event) => {
         e.preventDefault();
@@ -74,6 +75,9 @@ class Chat extends Block<ChatProps> {
       onLoginAdd: () => {
         this.addUser();
       },
+      onUserDelete: () => {
+        this.userDelete();
+      }
     });
 
     this.getUserId();
@@ -81,6 +85,18 @@ class Chat extends Block<ChatProps> {
 
   getUserId() {
     this.setProps({userId: this.props.store.getState().user?.id});
+  }
+
+  userDelete() {
+    const loginInput = document.querySelector('input[name="login"]') as HTMLInputElement;
+    if (loginInput.value) {
+      const loginData = {
+        users: [Number(loginInput.value)],
+        chatId: this.props.store.getState().activeChat,
+      };
+
+      this.props.store.dispatch(deleteUser, JSON.stringify(loginData));
+    }
   }
 
   addUser() {
@@ -96,14 +112,14 @@ class Chat extends Block<ChatProps> {
   }
 
   closeModal() {
-    this.props.store.dispatch({isLoginModal: false});
+    this.props.store.dispatch({isLoginModal: false, isDelLoginModal: false});
   }
 
   protected render(): string {
     // language=hbs
     return `
         <div class="chat">
-            <div class="chat__header">
+            <div class="chat__header{{#if activeChatId}} is-active{{/if}}">
                 <div class="chat__img">
                     <img src="${profileImg}" alt="user-photo">
                 </div>
@@ -141,9 +157,6 @@ class Chat extends Block<ChatProps> {
                                  placeholder="Сообщение"
                                  inputName="message"
                                  id="message"
-                                 onBlur=onBlur
-                                 onInput=messageHandler
-                                 onFocus=messageHandler
                         }}}
                     </label>
                     {{{InputError ref="errorRef" text=error}}}
@@ -163,6 +176,16 @@ class Chat extends Block<ChatProps> {
                         onModalCloseClick=onModalCloseClick
                         onModalOverlayClick=onModalOverlayClick
                         onLoginAdd=onLoginAdd
+                }}}
+            {{/if}}
+            {{#if isDelLoginModal}}
+                {{{Modal
+                        modalFile=false
+                        modalLogin=true
+                        modalTitle='Удалить пользователя'
+                        onModalCloseClick=onModalCloseClick
+                        onModalOverlayClick=onModalOverlayClick
+                        onLoginAdd=onUserDelete
                 }}}
             {{/if}}
         </div>
