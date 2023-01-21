@@ -43,7 +43,7 @@
     flex-direction: column;
     justify-content: center;
 
-    &~.input-error {
+    & ~ .input-error {
       font-size: 14px;
       position: static;
       text-align: center;
