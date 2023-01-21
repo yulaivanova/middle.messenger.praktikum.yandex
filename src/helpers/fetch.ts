@@ -69,7 +69,7 @@ export class HTTPTransport {
       });
 
       xhr.onload = function () {
-        if (xhr.getResponseHeader("Content-Type").includes('image')) {
+        if (xhr.getResponseHeader('Content-Type')?.includes('image')) {
           resolve(xhr.responseURL);
         } else {
           const isJson = xhr.response !== 'OK';

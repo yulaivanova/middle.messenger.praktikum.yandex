@@ -1,17 +1,15 @@
 import {Block, CoreRouter, Store} from 'core';
-import {withRouter, withStore, withChats} from 'utils';
-import {createChat, getChat} from 'services/chat';
-import {Chats} from '../../api/types';
+import {withRouter, withStore} from 'utils';
+import {createChat} from 'services/chat';
 
 type ChatPageProps = {
   router: CoreRouter;
+  // eslint-disable-next-line no-undef
   store: Store<AppState>;
   onProfileClick?: () => void;
   onCreateClick?: () => void;
   onCreateChat?: () => void;
 };
-
-const url = new URL('../../assets/img/user-icon.png', import.meta.url).href;
 
 export class ChatPage extends Block<ChatPageProps> {
   static componentName = 'ChatPage';

@@ -1,9 +1,9 @@
 import Block from 'core/Block';
-import {validateForm, ValidateRuleType} from '../../helpers/validateForm';
-import {withIsModal, withStore} from '../../utils';
+import {withStore} from '../../utils';
 import {Store} from '../../core';
 
 interface ModalProps {
+  // eslint-disable-next-line no-undef
   store: Store<AppState>;
   modalTitle: string;
   modalFile?: boolean;
@@ -23,7 +23,7 @@ class Modal extends Block {
 
     this.setProps({
       formError: () => this.props.store.getState().fileFormError,
-      onAvatarInputChange:(e: Event) => {
+      onAvatarInputChange: (e: Event) => {
         const label = document.querySelector('.input-file__label-text') as HTMLFormElement;
         const curFile = e.target.files[0];
         label.textContent = curFile.name;

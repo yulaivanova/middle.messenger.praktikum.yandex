@@ -1,5 +1,5 @@
 import {Block, CoreRouter, Store} from 'core';
-import {withUser, withRouter, withStore, withIsModal, withAvatar} from '../../utils';
+import {withUser, withRouter, withStore, withIsModal} from '../../utils';
 import {logout} from '../../services/auth';
 import {changeUserProfile, changeUserPassword, changeUserAvatar} from '../../services/profile';
 
@@ -53,6 +53,8 @@ export class ProfilePage extends Block<ProfilePageProps> {
         this.props.noChange = false;
         this.props.saveDataBtn = true;
         this.props.showName = false;
+        this.props.savePasswordBtn = false;
+        this.props.password = false;
       },
       onSaveDataClick: () => {
         this.onSaveDataBtnClick();
@@ -92,6 +94,8 @@ export class ProfilePage extends Block<ProfilePageProps> {
       },
       onProfileBack: () => {
         this.props.store.dispatch({isSettings: true});
+        this.props.savePasswordBtn = false;
+        this.props.saveDataBtn = false;
       },
     });
   }

@@ -1,7 +1,7 @@
 import {Block, CoreRouter, Store} from 'core';
 import {validateForm, ValidateRuleType} from 'helpers/validateForm';
 import {withRouter, withStore} from 'utils';
-import {login, logout} from '../../services/auth';
+import {login} from '../../services/auth';
 
 type InputRules = {
   [propertyName: string]: ValidateRuleType,
