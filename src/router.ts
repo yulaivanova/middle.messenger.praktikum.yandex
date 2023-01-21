@@ -32,10 +32,10 @@ export function initRouter(router: CoreRouter, store: Store<AppState>) {
       const isAuthorized = Boolean(store.getState().user);
       const currentScreen = Boolean(store.getState().screen);
 
-      // if (isAuthorized && store.getState().screen === 'login') {
-      //   store.dispatch({screen: Screens.Chat});
-      //   return;
-      // }
+      if (isAuthorized && store.getState().screen === 'login') {
+        store.dispatch({screen: Screens.Chat});
+        return;
+      }
 
       if (isAuthorized || !route.shouldAuthorized) {
         store.dispatch({screen: route.block});
