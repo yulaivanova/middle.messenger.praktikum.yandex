@@ -4,6 +4,7 @@ import Block from '../../core/Block';
 
 interface ErrorProps {
   text?: string;
+  className?: string;
 }
 
 export class InputError extends Block<ErrorProps> {
@@ -11,7 +12,7 @@ export class InputError extends Block<ErrorProps> {
   protected render(): string {
     // language=hbs
     return `
-        <span class="input-error">{{text}}</span>
+        <span class="input-error{{#if className}} {{className}}{{/if}}">{{text}}</span>
     `;
   }
 }

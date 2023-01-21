@@ -1,22 +1,34 @@
 import Block from '../../core/Block';
 import {validateForm, ValidateRuleType} from '../../helpers/validateForm';
+import {withUser, withStore, withRouter} from 'utils';
+import {CoreRouter, Store} from 'core';
 
 
 interface ProfileProps {
+  store: Store<AppState>;
+  user: User | null;
   name?: string;
   password?:boolean;
   noChange?:boolean;
   showName?:boolean;
   error?:string;
-  imageUrl?:string;
+  onAvatarClick?: () => void;
+  loginHandler?:(e: Event)=> void;
+  emailHandler?:(e: Event)=> void;
+  phoneHandler?:(e: Event)=> void;
+  nameHandler?:(e: Event)=> void;
+  passwordHandler?:(e: Event)=> void;
+  passwordRepeatHandler?:(e: Event)=> void;
+  avatarPath?: () => string | null;
 }
 
-export class ProfileList extends Block {
+class ProfileList extends Block<ProfileProps> {
   static componentName = 'ProfileList';
-  constructor({...props}: ProfileProps) {
-    super({...props});
+  constructor(props: ProfileProps) {
+    super(props);
 
     this.setProps({
+      avatarPath: () => this.props.store.getState().avatarPath,
       loginHandler: (e: Event) => {
         const inputEl = e.target as HTMLInputElement;
         const error = validateForm([{type: ValidateRuleType.Login, value: inputEl.value}]);
@@ -55,8 +67,6 @@ export class ProfileList extends Block {
         this.checkPassword(inputEl);
       },
     });
-
-    this.getImageUrl();
   }
 
   checkPassword(inputEl: HTMLInputElement) {
@@ -65,20 +75,18 @@ export class ProfileList extends Block {
     this.refs.errorRepeatPasswordRef.setProps({text: errorText});
   }
 
-  getImageUrl() {
-    const url = new URL('../../assets/img/profile.png', import.meta.url).href;
-
-    this.setProps({imageURL: url});
-  }
-
   protected render(): string {
     // language=hbs
     return `
         <div class="profile-list">
-            <div class="profile-list__img">
-                <img src="{{imageURL}}" alt="profile">
-                <span>Поменять аватар</span>
-            </div>
+            {{{Button
+                    text=""
+                    type="button"
+                    className="profile-list__img"
+                    isProfileImg=true
+                    imageURL=avatarPath
+                    onClick=onAvatarClick
+            }}}
             {{#if showName}}
                 <p class="profile-list__title">{{name}}</p>
             {{/if}}
@@ -127,7 +135,7 @@ export class ProfileList extends Block {
                                  placeholder="Введите email"
                                  inputName="email"
                                  id="email"
-                                 value="pochta@yandex.ru"
+                                 value=user.email
                                  ref="emailInputRef"
                                  onFocus=emailHandler
                                  onInput=emailHandler
@@ -141,7 +149,7 @@ export class ProfileList extends Block {
                                  placeholder="Введите логин"
                                  inputName="login"
                                  id="login"
-                                 value="ivanivanov"
+                                 value=user.login
                                  ref="loginInputRef"
                                  onFocus=loginHandler
                                  onInput=loginHandler
@@ -155,7 +163,7 @@ export class ProfileList extends Block {
                                  placeholder="Введите имя"
                                  inputName="first_name"
                                  id="first_name"
-                                 value="Иван"
+                                 value=user.firstName
                                  ref="nameInputRef"
                                  onInput=nameHandler
                                  onBlur=nameHandler
@@ -169,7 +177,7 @@ export class ProfileList extends Block {
                                  placeholder="Введите фамилию"
                                  inputName="second_name"
                                  id="second_name"
-                                 value="Иванов"
+                                 value=user.secondName
                                  ref="surnameInputRef"
                                  onInput=nameHandler
                                  onBlur=nameHandler
@@ -183,7 +191,7 @@ export class ProfileList extends Block {
                                  placeholder="Введите имя в чате"
                                  inputName="display_name"
                                  id="display_name"
-                                 value="Иванушка"
+                                 value=user.displayName
                                  ref="displayNameInputRef"
                                  onInput=nameHandler
                                  onBlur=nameHandler
@@ -197,7 +205,7 @@ export class ProfileList extends Block {
                                  placeholder="Введите телефон"
                                  inputName="phone"
                                  id="phone"
-                                 value="+79099673030"
+                                 value=user.phone
                                  ref="phoneInputRef"
                                  onInput=phoneHandler
                                  onBlur=phoneHandler
@@ -211,3 +219,7 @@ export class ProfileList extends Block {
     `;
   }
 }
+
+const ComposedProfile = withStore(withUser(ProfileList));
+
+export {ComposedProfile as ProfileList};

@@ -118,4 +118,15 @@
   .input-wrapper {
     margin-bottom: 33px;
   }
+
+  .file-error {
+    position: absolute;
+    font-size: 12px;
+    text-align: center;
+    width: 100%;
+  }
+
+  form {
+    position: relative;
+  }
 }
