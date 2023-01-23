@@ -1,4 +1,5 @@
 import {User} from '../typings/app';
+import {Dispatch} from '../core';
 
 export type APIError = {
   reason: string;
@@ -43,3 +44,5 @@ export interface Message {
     upload_date: string;
   }
 }
+
+export type DispatchStateHandler<TAction> = (dispatch: Dispatch<AppState>, state: AppState, action: TAction) => Promise<void>

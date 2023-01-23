@@ -1,7 +1,7 @@
 import Block from 'core/Block';
 import {withStore, withMessages} from '../../utils';
 import {Store} from '../../core';
-import {addUser, deleteUser, getChat} from '../../services/chat';
+import {addUser, deleteUser, deleteChat} from '../../services/chat';
 import MessagesController from 'services/messages';
 import {Message} from 'api/types';
 
@@ -26,8 +26,10 @@ interface ChatProps {
   onSubmit?: (e: Event) => void;
   messageHandler?: (e: FocusEvent) => void;
   onChatControlsClick?: () => void;
+  onInputKeydown?: (e: Event) => void;
   userId?: number;
   activeChatId?: () => string | null;
+  onChatDeleteClick?: () => void;
 }
 class Chat extends Block<ChatProps> {
   static componentName = 'Chat';
@@ -57,7 +59,7 @@ class Chat extends Block<ChatProps> {
       onSubmit: (e: Event) => {
         e.preventDefault();
         const btnEl = e.target as HTMLInputElement;
-        const form = btnEl.closest('form') as HTMLFormElement;
+        const form = btnEl.closest('.chat__footer') as HTMLFormElement;
         const input = form.querySelector('input') as HTMLInputElement;
         const error = input.value.length === 0 ? 'Сообщение не должно быть пустым' : '';
         this.refs.errorRef.setProps({text: error});
@@ -77,7 +79,25 @@ class Chat extends Block<ChatProps> {
       },
       onUserDelete: () => {
         this.userDelete();
-      }
+      },
+      onChatDeleteClick: () => {
+        const activeChatId = this.props.store.getState().activeChat;
+        const chatData = {
+          chatId: activeChatId,
+        };
+        this.props.store.dispatch(deleteChat, JSON.stringify(chatData));
+      },
+      onInputKeydown: (e) => {
+        if (e.which === 13) {
+          const input = document.querySelector('input[name="message"]');
+          const error = input.value.length === 0 ? 'Сообщение не должно быть пустым' : '';
+          this.refs.errorRef.setProps({text: error});
+          if (!error) {
+            const chatId = this.props.store.getState().activeChat;
+            MessagesController.sendMessage(chatId, input.value);
+          }
+        }
+      },
     });
 
     this.getUserId();
@@ -125,8 +145,14 @@ class Chat extends Block<ChatProps> {
                 </div>
                 <p class="chat__title">{{name}}</p>
                 {{{Button
+                        text='Удалить чат'
+                        onClick=onChatDeleteClick
+                        className="chat__delete-chat"
+                }}}
+                {{{Button
                         chatControls=true
                         onClick=onChatControlsClick
+
                 }}}
                 <div class="chat__controls-block">
                     {{{Button
@@ -150,13 +176,14 @@ class Chat extends Block<ChatProps> {
                     {{/each}}
                 </div>
             </div>
-            <form class="chat__footer" action="#">
+            <div class="chat__footer">
                 <div class="chat__message">
                     <label for="message">
                         {{{Input type="text"
                                  placeholder="Сообщение"
                                  inputName="message"
                                  id="message"
+                                 onKeydown=onInputKeydown
                         }}}
                     </label>
                     {{{InputError ref="errorRef" text=error}}}
@@ -167,7 +194,7 @@ class Chat extends Block<ChatProps> {
                         className="chat__send-btn"
                         onClick=onSubmit
                 }}}
-            </form>
+            </div>
             {{#if isLoginModal}}
                 {{{Modal
                         modalFile=false

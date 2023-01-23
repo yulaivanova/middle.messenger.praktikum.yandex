@@ -42,7 +42,6 @@ class MessagesController {
   }
 
   onMessage(messages: Message | Message[], id) {
-    console.log('get');
     let messagesToAdd: Message[] = [];
     let res = {};
 
@@ -66,8 +65,8 @@ class MessagesController {
       setTimeout(() => {
         const allMessages = window.store.getState().messages;
         if (allMessages?.length) {
-          const activeMessages: Message[] | null | Message = allMessages.filter((item) => item.chat_id === id);
-          window.store.dispatch({activeMessages: activeMessages});
+          const activeMessagesList: Message[] | null | Message = allMessages.filter((item) => item.chat_id === id);
+          window.store.dispatch({activeMessages: activeMessagesList});
           const elements = document.querySelectorAll('.chat__bubble');
           if (elements.length) {
             elements[elements.length - 1].scrollIntoView({behavior: 'smooth'});

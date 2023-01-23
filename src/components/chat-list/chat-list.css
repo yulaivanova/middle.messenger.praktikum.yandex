@@ -127,19 +127,19 @@
       }
 
       &::-webkit-input-placeholder {
-        color: $color-storm-grey;;
+        color: $color-storm-grey;
       }
 
       &::-moz-placeholder {
-        color: $color-storm-grey;;
+        color: $color-storm-grey;
       }
 
       &:-moz-placeholder {
-        color: $color-storm-grey;;
+        color: $color-storm-grey;
       }
 
       &:-ms-input-placeholder {
-        color: $color-storm-grey;;
+        color: $color-storm-grey;
       }
 
       &:hover {

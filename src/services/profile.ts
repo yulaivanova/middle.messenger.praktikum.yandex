@@ -2,6 +2,7 @@ import { profileAPI } from 'api/profile';
 import type { Dispatch } from 'core';
 import { transformUser, apiHasError } from 'utils';
 import { UserDTO } from 'api/types';
+import {BASE_URL} from 'api/vars';
 
 
 type ProfilePayload = {
@@ -71,5 +72,5 @@ export const changeUserAvatar = async (
 };
 
 export const getAvatarPath = (link: string) => {
-  return link ? `https://ya-praktikum.tech/api/v2/resources${link}` : null;
+  return link ? `${BASE_URL}/resources${link}` : null;
 };
