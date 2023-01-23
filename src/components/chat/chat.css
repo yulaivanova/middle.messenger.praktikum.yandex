@@ -331,6 +331,16 @@
   &__info {
     text-align: center;
   }
+
+  &__delete-chat {
+    background-color: transparent;
+    color: $color-default-black;
+    width: auto;
+    margin-left: 20px;
+    border: 1px solid $color-default-black;
+    height: auto;
+    padding: 5px 10px;
+  }
 }
 
 .chat-block {

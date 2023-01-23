@@ -1,7 +1,7 @@
 import {Dispatch} from '../core';
 import {chatAPI} from '../api/chat';
 import {apiHasError} from '../utils';
-import {Chats} from '../api/types';
+import {Chats, DispatchStateHandler} from '../api/types';
 import MessagesController from './messages';
 
 type ChatTitle = {
@@ -13,12 +13,11 @@ type NewUserData = {
   chatId: string
 }
 
+type ChatId = {
+  chatId: string,
+}
 
-export const createChat = async (
-    dispatch: Dispatch<AppState>,
-    state: AppState,
-    action: ChatTitle
-) => {
+export const createChat: DispatchStateHandler<ChatTitle> = async (dispatch, state, action) => {
   const response = await chatAPI.create(action);
 
   if (apiHasError(response)) {
@@ -52,11 +51,7 @@ export const getChat = async (
   dispatch({chats: response as Chats[]});
 };
 
-export const addUser = async (
-    dispatch: Dispatch<AppState>,
-    state: AppState,
-    action: NewUserData
-) => {
+export const addUser: DispatchStateHandler<NewUserData> = async (dispatch, state, action) => {
   const response = await chatAPI.addUser(action);
 
   if (apiHasError(response)) {
@@ -67,11 +62,7 @@ export const addUser = async (
   dispatch({fileFormError: null, isLoginModal: false});
 };
 
-export const deleteUser = async (
-    dispatch: Dispatch<AppState>,
-    state: AppState,
-    action: NewUserData
-) => {
+export const deleteUser: DispatchStateHandler<NewUserData> = async (dispatch, state, action) => {
   const response = await chatAPI.deleteUser(action);
 
   if (apiHasError(response)) {
@@ -80,6 +71,23 @@ export const deleteUser = async (
   }
 
   dispatch({fileFormError: null, isDelLoginModal: false});
+};
+
+export const deleteChat: DispatchStateHandler<ChatId> = async (dispatch, state, action) => {
+  const response = await chatAPI.deleteChat(action);
+
+  if (apiHasError(response)) {
+    console.log(response);
+    return;
+  }
+
+  const responseChats = await chatAPI.getChats();
+
+  if (apiHasError(responseChats)) {
+    return;
+  }
+
+  dispatch({chats: responseChats as Chats[], activeChat: null, activeMessages: null});
 };
 
 

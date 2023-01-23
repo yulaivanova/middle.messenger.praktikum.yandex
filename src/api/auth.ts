@@ -1,4 +1,5 @@
 import {HTTPTransport} from '../helpers/fetch';
+import {BASE_URL} from './vars';
 
 type LoginRequestData = {
   login: string;
@@ -16,19 +17,39 @@ type SignupRequestData = {
 
 export const authAPI = {
   signup: (userData: SignupRequestData) => {
-    return new HTTPTransport().post('https://ya-praktikum.tech/api/v2/auth/signup', {
-      headers: {'Content-Type': 'application/json'}, data: userData});
+    try {
+      return new HTTPTransport().post(`${BASE_URL}/auth/signup`, {
+        headers: {'Content-Type': 'application/json'}, data: userData
+      });
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
   },
   login: (userData: LoginRequestData) => {
-    return new HTTPTransport().post('https://ya-praktikum.tech/api/v2/auth/signin', {
-      headers: {'Content-Type': 'application/json'}, data: userData});
+    try {
+      return new HTTPTransport().post(`${BASE_URL}/auth/signin`, {
+        headers: {'Content-Type': 'application/json'}, data: userData
+      });
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
   },
   me: () => {
-    return new HTTPTransport().get('https://ya-praktikum.tech/api/v2/auth/user', {
-      headers: {'Content-Type': 'application/json'}});
+    try {
+      return new HTTPTransport().get(`${BASE_URL}/auth/user`, {headers: {'Content-Type': 'application/json'}});
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
   },
   logout: () => {
-    return new HTTPTransport().post('https://ya-praktikum.tech/api/v2/auth/logout', {
-      headers: {'Content-Type': 'application/json'}});
+    try {
+      return new HTTPTransport().post(`${BASE_URL}/auth/logout`, {headers: {'Content-Type': 'application/json'}});
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
   },
 };

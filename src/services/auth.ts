@@ -1,5 +1,5 @@
-import { authAPI } from 'api/auth';
-import { UserDTO } from 'api/types';
+import {authAPI} from 'api/auth';
+import {UserDTO, DispatchStateHandler} from 'api/types';
 import type { Dispatch } from 'core';
 import { transformUser, apiHasError } from 'utils';
 import {getChat} from './chat';
@@ -20,11 +20,7 @@ type SignupPayload = {
   phone: string
 };
 
-export const signup = async (
-    dispatch: Dispatch<AppState>,
-    state: AppState,
-    action: SignupPayload
-) => {
+export const signup: DispatchStateHandler<SignupPayload> = async (dispatch, state, action) => {
   const response = await authAPI.signup(action);
 
   if (apiHasError(response)) {
@@ -46,11 +42,7 @@ export const signup = async (
   window.router.go('/chat');
 };
 
-export const login = async (
-    dispatch: Dispatch<AppState>,
-    state: AppState,
-    action: LoginPayload,
-) => {
+export const login: DispatchStateHandler<LoginPayload> = async (dispatch, state, action,) => {
   const response = await authAPI.login(action);
 
   if (apiHasError(response)) {
