@@ -49,12 +49,7 @@ export class ProfilePage extends Block<ProfilePageProps> {
       password: false,
       onChangeClick: () => {
         this.props.store.dispatch({isSettings: false});
-        this.props.profileControls = false;
-        this.props.noChange = false;
-        this.props.saveDataBtn = true;
-        this.props.showName = false;
-        this.props.savePasswordBtn = false;
-        this.props.password = false;
+        this.setProps({profileControls: false, noChange: false, saveDataBtn: true, showName: false, savePasswordBtn: false, password: false});
       },
       onSaveDataClick: () => {
         this.onSaveDataBtnClick();
@@ -67,17 +62,11 @@ export class ProfilePage extends Block<ProfilePageProps> {
       },
       onAvatarClick: () => {
         this.props.store.dispatch({isModal: true});
-        this.props.modalFile = true;
-        this.props.modalTitle = 'Загрузить файл';
       },
       onChangePasswordClick: () => {
         this.props.store.dispatch({isSettings: false});
-        this.props.profileControls = false;
-        this.props.noChange = true;
-        this.props.password = true;
-        this.props.savePasswordBtn = true;
-        this.props.saveDataBtn = false;
-        this.props.showName = false;
+
+        this.setProps({showName: false, saveDataBtn: false, password: true, noChange: true, profileControls: false, savePasswordBtn: true});
       },
       onModalCloseClick: () => {
         this.closeModal();
@@ -94,8 +83,8 @@ export class ProfilePage extends Block<ProfilePageProps> {
       },
       onProfileBack: () => {
         this.props.store.dispatch({isSettings: true});
-        this.props.savePasswordBtn = false;
-        this.props.saveDataBtn = false;
+        this.setProps({savePasswordBtn: false});
+        this.setProps({saveDataBtn: false});
       },
     });
   }
@@ -110,17 +99,7 @@ export class ProfilePage extends Block<ProfilePageProps> {
     }
   }
   closeModal() {
-    this.props.modalFile = false;
-    this.props.modalTitle = '';
     this.props.store.dispatch({isModal: false});
-  }
-  openProfileList() {
-    this.props.profileControls = true;
-    this.props.noChange = true;
-    this.props.savePasswordBtn = false;
-    this.props.saveDataBtn = false;
-    this.props.showName = true;
-    this.props.password = false;
   }
 
   onSavePasswordBtnClick() {
@@ -250,9 +229,9 @@ export class ProfilePage extends Block<ProfilePageProps> {
             </div>
             {{#if isModal}}
                 {{{Modal
-                        modalFile=modalFile
-                        modalLogin=modalLogin
-                        modalTitle="{{modalTitle}}"
+                        modalFile=true
+                        modalLogin=false
+                        modalTitle="Загрузить файл"
                         onModalCloseClick=onModalCloseClick
                         onModalOverlayClick=onModalOverlayClick
                         onAvatarChange=onAvatarChange

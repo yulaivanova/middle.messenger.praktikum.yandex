@@ -21,7 +21,7 @@ export default class Block<P = any> {
   public id = nanoid(6);
 
   protected _element: Nullable<HTMLElement> = null;
-  protected readonly props: P;
+  protected props: Readonly<P>;
   protected children: { [id: string]: Block } = {};
 
   eventBus: () => EventBus<Events>;
@@ -36,7 +36,7 @@ export default class Block<P = any> {
 
     this.getStateFromProps(props);
 
-    this.props = this._makePropsProxy(props || ({} as P));
+    this.props = props || ({} as P);
     this.state = this._makePropsProxy(this.state);
 
     this.eventBus = () => eventBus;
@@ -109,12 +109,19 @@ export default class Block<P = any> {
     return true;
   }
 
-  setProps = (nextProps: Partial<P>) => {
-    if (!nextProps) {
+  setProps = (nextPartialProps: Partial<P>) => {
+    if (!nextPartialProps) {
       return;
     }
 
-    Object.assign(this.props, nextProps);
+    const prevProps = this.props;
+    const nextProps = {...prevProps, ...nextPartialProps};
+
+    this.props = nextProps;
+
+    this.eventBus().emit(Block.EVENTS.FLOW_CDU, prevProps, nextProps);
+
+    // Object.assign(this.props, nextProps);
   };
 
   setState = (nextState: any) => {
