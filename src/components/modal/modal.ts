@@ -1,35 +1,32 @@
 import Block from 'core/Block';
-import {validateForm, ValidateRuleType} from '../../helpers/validateForm';
+import {withStore} from '../../utils';
+import {Store} from '../../core';
 
 interface ModalProps {
+  // eslint-disable-next-line no-undef
+  store: Store<AppState>;
   modalTitle: string;
   modalFile?: boolean;
   modalLogin?:boolean;
+  onModalCloseClick?: () => void;
+  onModalOverlayClick?:(e:Event) => void;
+  onAvatarChange?: (e: Event) => void;
+  onAvatarInputChange?:(e: Event) => void;
+  formError?: () => string | null;
+  onLoginAdd?: () => void;
 }
 
-export class Modal extends Block {
+class Modal extends Block {
   static componentName = 'Modal';
   constructor({...props}: ModalProps) {
-    super({...props});
+    super({...props, events: {click: props.onModalOverlayClick}});
 
     this.setProps({
-      loginHandler: (e: Event) => {
-        const inputEl = e.target as HTMLInputElement;
-        const error = validateForm([{type: ValidateRuleType.Login, value: inputEl.value}]);
-        this.refs.loginInputRef.refs.errorRef.setProps({text: error});
-      },
-      onLoginSubmit: (e: Event) => {
-        e.preventDefault();
-        const btnEl = e.target as HTMLInputElement;
-        const form = btnEl.closest('form') as HTMLFormElement;
-        const input = form.querySelector('input');
-        const formData = new FormData(form);
-        // eslint-disable-next-line no-console
-        console.log(formData, ...formData);
-        if (input) {
-          const error = validateForm([{type: ValidateRuleType.Login, value: input.value}]);
-          this.refs.loginInputRef.refs.errorRef.setProps({text: error});
-        }
+      formError: () => this.props.store.getState().fileFormError,
+      onAvatarInputChange: (e: Event) => {
+        const label = document.querySelector('.input-file__label-text') as HTMLFormElement;
+        const curFile = e.target.files[0];
+        label.textContent = curFile.name;
       },
     });
   }
@@ -41,12 +38,12 @@ export class Modal extends Block {
             <div class="modal__wrapper">
                 <div class="modal__overlay"></div>
                 <div class="modal__content">
-                    <button class="modal__close-btn" type="button" aria-label="Закрыть попап">
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M13.0001 13L1.00317 1" stroke="black" stroke-linecap="round"/>
-                            <path d="M1.00047 13L12.9974 1" stroke="black" stroke-linecap="round"/>
-                        </svg>
-                    </button>
+                    {{{Button
+                            text="Поменять"
+                            type="button"
+                            closeBtn=true
+                            onClick=onModalCloseClick
+                    }}}
                     <div class="modal__inner">
                         <form action="#">
                           <p class="modal__title">{{modalTitle}}</p>
@@ -54,33 +51,38 @@ export class Modal extends Block {
                               <div class="input-file">
                                   <label>
                                       <span class="input-file__label-text">Выбрать файл на компьютере</span>
-                                      <input class="visually-hidden" type="file" id="avatar" name="avatar" accept="image/png, image/jpeg, image/heic" >
+                                      {{{Input type="file"
+                                               inputName="avatar"
+                                               id="avatar"
+                                               onChange=onAvatarInputChange
+                                               isFile=true
+                                      }}}
                                   </label>
                                   <p class="input-file__error">Нужно выбрать файл</p>
                               </div>
                               {{{Button
                                       text="Поменять"
                                       type="button"
+                                      onClick=onAvatarChange
                               }}}
+                              {{{InputError text=formError className="file-error"}}}
                           {{/if}}
                           {{#if modalLogin}}
                               {{{InputWrapper
                                       type="text"
                                       type="text"
-                                      placeholder="Логин"
+                                      placeholder="ID полльзователя"
                                       inputName="login"
                                       id="login"
                                       value=""
-                                      onInput=loginHandler
-                                      onFocus=loginHandler
-                                      onBlur=loginHandler
                                       ref="loginInputRef"
                               }}}
                               {{{Button
                                       text="Добавить"
                                       type="button"
-                                      onClick=onLoginSubmit
+                                      onClick=onLoginAdd
                               }}}
+                              {{{InputError text=formError className="file-error"}}}
                           {{/if}}
                         </form>
                     </div>
@@ -90,3 +92,7 @@ export class Modal extends Block {
     `;
   }
 }
+
+const ComposedModal = withStore(Modal);
+
+export {ComposedModal as Modal};

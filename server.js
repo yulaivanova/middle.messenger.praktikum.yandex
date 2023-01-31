@@ -5,6 +5,9 @@ const port = process.env.PORT || 3000;
 
 app.use(express.static('dist'));
 
+app.use('*', (req, res) => {
+  res.sendFile('index.html', { root: './dist' })
+});
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })

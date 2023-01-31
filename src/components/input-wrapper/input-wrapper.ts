@@ -33,6 +33,7 @@ export class InputWrapper extends Block {
                      onFocus=onFocus
                      onInput=onInput
                      onBlur=onBlur
+                     value=value
             }}}
             <label for="{{id}}" class="input-wrapper__label">{{placeholder}}</label>
             {{{InputError ref="errorRef" text=error}}}

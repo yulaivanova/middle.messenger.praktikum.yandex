@@ -7,12 +7,21 @@
   flex-direction: column;
 
   &__header {
+    position: relative;
     display: flex;
     align-items: center;
 
     border-bottom: 1px solid $color-whisper;
 
     padding: 10px 0;
+
+    visibility: visible;
+    opacity: 0;
+
+    &.is-active {
+      opacity: 1;
+      visibility: visible;
+    }
   }
 
   &__footer {
@@ -69,27 +78,42 @@
 
   &__controls {
     margin-left: auto;
-    background-color: transparent;
+    background: $color-white-smoke;
     border: none;
-    height: 15px;
-    width: 15px;
+    width: 25px;
+    height: 25px;
 
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
     margin-bottom: -3px;
     margin-right: 10px;
 
+    border-radius: 50%;
+
     cursor: pointer;
+
+    transition: opacity 0.3s ease;
+
+    &:hover,
+    &:focus {
+      opacity: 0.7;
+    }
 
     span {
       display: block;
       min-width: 3px;
       min-height: 3px;
-      background: $color-nero;
+      background: $color-royal-blue;
       border-radius: 50%;
 
       margin-bottom: 3px;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
     }
   }
 
@@ -198,7 +222,7 @@
     }
 
     span {
-      padding-left: 15px;
+      padding-left: 7px;
     }
   }
 
@@ -259,6 +283,63 @@
     &:focus {
       opacity: 0.7;
     }
+  }
+
+  &__controls-block {
+    opacity: 0;
+    visibility: hidden;
+
+    position: absolute;
+    z-index: 100;
+    right: 0;
+    top: calc(100% + 10px);
+
+    display: flex;
+    flex-direction: column;
+
+    background: $color-default-white;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.14);
+    border-radius: 12px;
+
+    padding: 15px;
+
+    &.is-active {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  &__control {
+    justify-content: flex-start;
+    background-color: transparent;
+    color: $color-default-black;
+
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+
+    width: auto;
+    height: auto;
+
+    margin-bottom: 15px;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  &__info {
+    text-align: center;
+  }
+
+  &__delete-chat {
+    background-color: transparent;
+    color: $color-default-black;
+    width: auto;
+    margin-left: 20px;
+    border: 1px solid $color-default-black;
+    height: auto;
+    padding: 5px 10px;
   }
 }
 
