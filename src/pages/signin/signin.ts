@@ -144,7 +144,7 @@ export class SigninPage extends Block<SigninPageProps> {
   render() {
     // language=hbs
     return `
-        <section class="login">
+        <section class="login" data-testid="signin">
             <div class="login__form">
                 <form action="#">
                     <h1 class="login__title">Регистрация</h1>
