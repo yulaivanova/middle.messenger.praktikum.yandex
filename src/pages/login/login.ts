@@ -126,6 +126,7 @@ export class LoginPage extends Block<LoginPageProps> {
                                 type="button"
                                 mod="no-border"
                                 onClick=onRegister
+                                dataTestId="signin-btn"
                         }}}
                     </div>
                     {{{InputError text=formError}}}

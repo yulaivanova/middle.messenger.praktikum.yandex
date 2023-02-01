@@ -12,19 +12,20 @@ interface ButtonProps {
   imageURL?: string;
   closeBtn?:boolean;
   chatControls?:boolean;
+  dataTestId?: string;
 }
 
 export class Button extends Block {
   static componentName = 'Button';
-  constructor({text, mod, type, className, isArrow, isProfileBack, isProfileImg, imageURL, closeBtn, chatControls, onClick}: ButtonProps) {
-    super({text, mod, type, className, isArrow, isProfileBack, isProfileImg, imageURL, closeBtn, chatControls, events: {click: onClick}});
+  constructor({text, mod, type, className, isArrow, isProfileBack, isProfileImg, imageURL, closeBtn, chatControls, dataTestId, onClick}: ButtonProps) {
+    super({text, mod, type, className, isArrow, isProfileBack, isProfileImg, imageURL, closeBtn, chatControls, dataTestId, events: {click: onClick}});
   }
 
   protected render(): string {
     // console.log(this.props.imageURL, this.props.className, 'button');
     return `
         {{#if chatControls}}
-            <button type="button" class="chat__controls" aria-label="Открыть контролы чата">
+            <button type="button" class="chat__controls" aria-label="Открыть контролы чата" {{#if dataTestId}}data-testid="{{dataTestId}}"{{/if}}>
                     <span></span>
                     <span></span>
                     <span></span>
@@ -37,12 +38,12 @@ export class Button extends Block {
                 </svg>
             </button>
         {{else if isProfileImg}}
-        <button class="{{className}}">
+        <button class="{{className}}" {{#if dataTestId}}data-testid="{{dataTestId}}"{{/if}}>
             <img src="{{imageURL}}" alt="profile">
             <span>Поменять аватар</span>
          </button>
         {{else}}
-        <button type="{{type}}" class="button {{#if mod}}button--{{mod}}{{/if}} {{#if className}}{{className}}{{/if}}">
+        <button type="{{type}}" class="button {{#if mod}}button--{{mod}}{{/if}} {{#if className}}{{className}}{{/if}}" {{#if dataTestId}}data-testid="{{dataTestId}}"{{/if}}>
           {{#if isProfileBack}}
             <span>
               <svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
