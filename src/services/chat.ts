@@ -30,6 +30,11 @@ export const createChat: DispatchStateHandler<ChatTitle> = async (dispatch, stat
     return;
   }
 
+  responseChats.map(async(chat) => {
+    const tokenResponse = await chatAPI.getToken(chat.id);
+    await MessagesController.connect(chat.id, tokenResponse.token);
+  });
+
   dispatch({chats: responseChats as Chats[]});
 };
 

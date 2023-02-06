@@ -5,8 +5,7 @@ import {addUser, deleteUser, deleteChat} from '../../services/chat';
 import MessagesController from 'services/messages';
 import {Message} from 'api/types';
 
-const testImg = new URL('../../assets/img/test-image.png', import.meta.url).href;
-const profileImg = new URL('../../assets/img/user-icon.png', import.meta.url).href;
+// const profileImg = new URL('../../assets/img/user-icon.png', import.meta.url).href;
 
 interface ChatProps {
   store: Store<AppState>;
@@ -141,7 +140,7 @@ class Chat extends Block<ChatProps> {
         <div class="chat">
             <div class="chat__header{{#if activeChatId}} is-active{{/if}}">
                 <div class="chat__img">
-                    <img src="${profileImg}" alt="user-photo">
+                    <img src='../../assets/img/user-icon.png' alt="user-photo">
                 </div>
                 <p class="chat__title">{{name}}</p>
                 {{{Button

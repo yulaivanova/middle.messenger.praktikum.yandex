@@ -1,3 +1,6 @@
+require('babel-core/register');
+import 'regenerator-runtime/runtime';
+
 import {renderDOM, registerComponent, Store} from 'core';
 import {CoreRouter} from 'core/Router/CoreRouter';
 import {PathRouter} from 'core/Router/PathRouter';

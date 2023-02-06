@@ -3,7 +3,7 @@ import {withChats, withRouter, withStore} from '../../utils';
 import {CoreRouter, Store} from '../../core';
 import {Chats} from '../../api/types';
 
-const url = new URL('../../assets/img/user-icon.png', import.meta.url).href;
+const url = '../../assets/img/user-icon.png';
 
 type ChatListProps = {
   router: CoreRouter;

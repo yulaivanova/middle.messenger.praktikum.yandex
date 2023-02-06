@@ -78,7 +78,7 @@ class ProfileList extends Block<ProfileProps> {
   protected render(): string {
     // language=hbs
     return `
-        <div class="profile-list">
+        <div class="profile-list" data-testid="profile-list">
             {{{Button
                     text=""
                     type="button"
@@ -92,7 +92,7 @@ class ProfileList extends Block<ProfileProps> {
             {{/if}}
             <ul class="profile-list__list">
                 {{#if password}}
-                    <li class="profile-list__item">
+                    <li class="profile-list__item" data-testid="change-password">
                         <p class="profile-list__subtitle">Старый пароль</p>
                         {{{Input type="password"
                                  placeholder="Введите пароль"

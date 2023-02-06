@@ -36,7 +36,7 @@ export const signup: DispatchStateHandler<SignupPayload> = async (dispatch, stat
     dispatch(logout);
     return;
   }
-  const avatarUrl = new URL('../assets/img/profile.png', import.meta.url).href;
+  const avatarUrl = '../assets/img/profile.png';
   dispatch({user: transformUser(responseUser as UserDTO), avatarPath: avatarUrl});
 
   window.router.go('/chat');
@@ -63,7 +63,7 @@ export const login: DispatchStateHandler<LoginPayload> = async (dispatch, state,
   dispatch({user: userData});
 
   if (!userData.avatar) {
-    const url = new URL('../assets/img/profile.png', import.meta.url).href;
+    const url = '../assets/img/profile.png';
     dispatch({avatarPath: url});
   } else {
     const avatarResponse = getAvatarPath(userData.avatar);
