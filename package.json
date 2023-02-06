@@ -7,7 +7,8 @@
     "dev": "npm run build && webpack serve",
     "build": "webpack",
     "lint": "stylelint \"**/*.css\"",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "husky install"
   },
   "alias": {
     "core": "./src/core",
@@ -36,8 +37,13 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint"
+    ]
   },
   "browserslist": {
     "production": [
@@ -71,9 +77,10 @@
     "file-loader": "6.2.0",
     "html-loader": "4.2.0",
     "html-webpack-plugin": "5.5.0",
-    "husky": "8.0.3",
+    "husky": "^8.0.0",
     "identity-obj-proxy": "3.0.0",
     "jest": "27.5.1",
+    "lint-staged": "^13.1.0",
     "mini-css-extract-plugin": "2.7.2",
     "msw": "1.0.0",
     "parcel": "2.8.0",
