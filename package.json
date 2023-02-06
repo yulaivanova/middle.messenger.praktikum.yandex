@@ -41,10 +41,9 @@
     }
   },
   "lint-staged": {
-    "*.css": [
-      "eslint src"
-    ],
-    "*.ts": "jest"
+    "*.css": "eslint src",
+    "*": "npm run test"
+
   },
   "browserslist": {
     "production": [
@@ -78,6 +77,7 @@
     "file-loader": "6.2.0",
     "html-loader": "4.2.0",
     "html-webpack-plugin": "5.5.0",
+    "husky": "8.0.0",
     "identity-obj-proxy": "3.0.0",
     "jest": "27.5.1",
     "lint-staged": "^13.1.0",
@@ -98,11 +98,10 @@
     "webpack-cli": "5.0.1",
     "webpack-dev-server": "4.11.1",
     "whatwg-fetch": "3.6.2",
-    "husky": "8.0.0"
+    "babel-core": "6.26.3",
+    "babel-register": "6.26.0"
   },
   "dependencies": {
-    "babel-core": "6.26.3",
-    "babel-register": "6.26.0",
     "express": "4.18.2",
     "nanoid": "3.3.1"
   },
